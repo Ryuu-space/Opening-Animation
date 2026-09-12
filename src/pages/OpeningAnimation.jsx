@@ -3,12 +3,18 @@ import { useMemo, useState } from 'react';
 import useCountdown from '../hooks/useCountdown';
 import useOpeningSequence from '../hooks/useOpeningSequence';
 
+import Curtains from '../components/Curtains/Curtains';
+import Ribbon from '../components/Ribbon/Ribbon';
+
+import logo from '../assets/logo-DGTPLIE_.webp';
+
 import {
   getOpeningTimestamp,
   getSettings,
 } from '../utils/animationSettings';
 
 import '../styles/opening-animation.css';
+import '../styles/curtains.css';
 
 
 /* =========================================
@@ -55,34 +61,63 @@ const Countdown = ({ time }) => {
 
 
 /* =========================================
-   RIBBON
+   SVASTI LOGO
 ========================================= */
 
-const Ribbon = ({ isOpening }) => {
+const OpeningLogo = () => {
   return (
     <div
-      className={`ribbon ${
-        isOpening ? 'ribbon--opening' : ''
-      }`}
+      className="opening-logo"
+      aria-hidden="true"
     >
-      <div className="ribbon__left" />
-
-      <div className="ribbon__right" />
-
-      <div className="ribbon-bow">
-        <div className="ribbon-bow__loop ribbon-bow__loop--left" />
-
-        <div className="ribbon-bow__loop ribbon-bow__loop--right" />
-
-        <div className="ribbon-bow__knot" />
-
-        <div className="ribbon-bow__tail ribbon-bow__tail--left" />
-
-        <div className="ribbon-bow__tail ribbon-bow__tail--right" />
-      </div>
+      <img
+        src={logo}
+        alt=""
+      />
     </div>
   );
 };
+
+
+
+/* =========================================
+   PEACH COUNTDOWN PANEL
+========================================= */
+
+const OpeningPanel = ({
+  countdown,
+  isCutting,
+}) => {
+  return (
+    <section
+      className={`opening-panel ${
+        isCutting
+          ? 'opening-panel--cutting'
+          : ''
+      }`}
+      aria-label="Svasti Styles opening countdown"
+    >
+      <div className="opening-panel__inner">
+        {/* Logo */}
+        <OpeningLogo />
+
+        {/* Elegant opening message */}
+        <p className="opening-panel__label">
+          The Grand Reveal Begins In
+        </p>
+
+        {/* Countdown */}
+        <div className="opening-panel__countdown">
+          <Countdown
+            time={countdown}
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
 
 
 /* =========================================
@@ -93,7 +128,9 @@ const Balloons = ({ isVisible }) => {
   return (
     <div
       className={`balloons ${
-        isVisible ? 'balloons--visible' : ''
+        isVisible
+          ? 'balloons--visible'
+          : ''
       }`}
       aria-hidden="true"
     >
@@ -174,7 +211,9 @@ const Confetti = ({ isVisible }) => {
   return (
     <div
       className={`confetti ${
-        isVisible ? 'confetti--visible' : ''
+        isVisible
+          ? 'confetti--visible'
+          : ''
       }`}
       aria-hidden="true"
     >
@@ -184,10 +223,15 @@ const Confetti = ({ isVisible }) => {
           className="confetti__piece"
           style={{
             left: piece.left,
-            animationDelay: piece.delay,
-            animationDuration: piece.duration,
 
-            '--rotation': piece.rotation,
+            animationDelay:
+              piece.delay,
+
+            animationDuration:
+              piece.duration,
+
+            '--rotation':
+              piece.rotation,
 
             '--drift-start':
               piece.driftStart,
@@ -198,9 +242,11 @@ const Confetti = ({ isVisible }) => {
             '--drift-late':
               piece.driftLate,
 
-            '--drift': piece.drift,
+            '--drift':
+              piece.drift,
 
-            '--size': piece.size,
+            '--size':
+              piece.size,
           }}
         />
       ))}
@@ -215,32 +261,35 @@ const Confetti = ({ isVisible }) => {
 
 const OpeningAnimation = () => {
   /*
-   * Read the saved configuration once
+   * Read saved configuration once
    * when the animation page loads.
    */
   const [settings] = useState(() =>
     getSettings(),
   );
 
+
   /*
-   * Convert the configured 12-hour time
-   * into the next opening timestamp.
+   * Convert the configured 12-hour
+   * opening time into a timestamp.
    */
   const openingTime = useMemo(
-    () => getOpeningTimestamp(settings),
+    () =>
+      getOpeningTimestamp(settings),
     [settings],
   );
 
+
   /*
-   * Countdown toward the configured
-   * opening time.
+   * Countdown toward the opening time.
    */
   const countdown = useCountdown(
     openingTime,
   );
 
+
   /*
-   * Control the animation sequence:
+   * Animation sequence:
    *
    * countdown
    *     ↓
@@ -259,9 +308,11 @@ const OpeningAnimation = () => {
     settings.enabled,
   );
 
-  /*
-   * Animation disabled.
-   */
+
+  /* =========================================
+     ANIMATION DISABLED
+  ========================================= */
+
   if (!settings.enabled) {
     return (
       <main className="opening-page">
@@ -270,11 +321,54 @@ const OpeningAnimation = () => {
     );
   }
 
+
+  /* =========================================
+     NORMAL ANIMATION
+  ========================================= */
+
   return (
     <main className="opening-page">
+
+      {/* =====================================
+          BACKGROUND
+      ===================================== */}
+
       <div className="opening-background" />
 
-      {/* Ribbon */}
+
+      {/* =====================================
+          CURTAIN
+          Behind the panel and ribbon
+      ===================================== */}
+
+      <Curtains
+        isOpening={
+          isCutting ||
+          isCelebrating ||
+          isComplete
+        }
+      />
+
+
+      {/* =====================================
+          PEACH PANEL
+          Contains logo + countdown
+      ===================================== */}
+
+      {!isCelebrating &&
+        !isComplete && (
+          <OpeningPanel
+            countdown={countdown}
+            isCutting={isCutting}
+          />
+        )}
+
+
+      {/* =====================================
+          RIBBON
+          MUST BE ABOVE CURTAIN + PANEL
+      ===================================== */}
+
       <Ribbon
         isOpening={
           isCutting ||
@@ -283,23 +377,11 @@ const OpeningAnimation = () => {
         }
       />
 
-      {/* Countdown */}
-      {!isCelebrating &&
-        !isComplete && (
-          <section
-            className={`opening-center ${
-              isCutting
-                ? 'opening-center--cutting'
-                : ''
-            }`}
-          >
-            <Countdown
-              time={countdown}
-            />
-          </section>
-        )}
 
-      {/* Confetti */}
+      {/* =====================================
+          CONFETTI
+      ===================================== */}
+
       <Confetti
         isVisible={
           isCelebrating ||
@@ -307,13 +389,18 @@ const OpeningAnimation = () => {
         }
       />
 
-      {/* Balloons */}
+
+      {/* =====================================
+          BALLOONS
+      ===================================== */}
+
       <Balloons
         isVisible={
           isCelebrating ||
           isComplete
         }
       />
+
     </main>
   );
 };

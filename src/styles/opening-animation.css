@@ -31,321 +31,6 @@
 }
 
 /* ==================================================
-   RIBBON
-================================================== */
-
-.ribbon {
-  position: absolute;
-  top: 50%;
-  left: 0;
-
-  width: 100%;
-  height: 82px;
-
-  transform: translateY(-50%);
-
-  z-index: 10;
-
-  pointer-events: none;
-}
-
-/* --------------------------------------------------
-   MAIN RIBBON
--------------------------------------------------- */
-
-.ribbon__left,
-.ribbon__right {
-  position: absolute;
-  top: 0;
-
-  width: 50%;
-  height: 100%;
-
-  background: #e52f68;
-
-  box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -5px 10px rgba(116, 0, 42, 0.14),
-    0 12px 28px rgba(174, 36, 87, 0.16);
-
-  transition:
-  transform 1.1s cubic-bezier(0.76, 0, 0.24, 1),
-  opacity 0.55s ease;
-}
-
-.ribbon__left {
-  left: 0;
-
-  transform-origin: right center;
-}
-
-.ribbon__right {
-  right: 0;
-
-  transform-origin: left center;
-}
-
-/* subtle satin highlight */
-
-.ribbon__left::after,
-.ribbon__right::after {
-  content: '';
-
-  position: absolute;
-  top: 0;
-
-  width: 28%;
-  height: 100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.12),
-      transparent
-    );
-
-  opacity: 0.75;
-}
-
-.ribbon__left::after {
-  right: 14%;
-}
-
-.ribbon__right::after {
-  left: 14%;
-}
-
-/* ==================================================
-   BOW
-================================================== */
-
-.ribbon-bow {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: 170px;
-  height: 110px;
-
-  transform: translate(-50%, -50%);
-
-  z-index: 20;
-
-  transition:
-    transform 1.05s cubic-bezier(0.76, 0, 0.24, 1),
-    opacity 0.45s ease;
-}
-
-/* --------------------------------------------------
-   BOW LOOPS
--------------------------------------------------- */
-
-.ribbon-bow__loop {
-  position: absolute;
-
-  top: 50%;
-
-  width: 78px;
-  height: 64px;
-
-  background: #e52f68;
-
-  box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.25),
-    inset 0 -6px 10px rgba(116, 0, 42, 0.16),
-    0 8px 18px rgba(174, 36, 87, 0.13);
-
-  transition:
-    transform 1.05s cubic-bezier(0.76, 0, 0.24, 1),
-    opacity 0.45s ease;
-}
-
-.ribbon-bow__loop--left {
-  left: 2px;
-
-  transform:
-    translateY(-50%)
-    rotate(-17deg);
-
-  border-radius:
-    50%
-    12px
-    12px
-    50%;
-
-  transform-origin: right center;
-}
-
-.ribbon-bow__loop--right {
-  right: 2px;
-
-  transform:
-    translateY(-50%)
-    rotate(17deg);
-
-  border-radius:
-    12px
-    50%
-    50%
-    12px;
-
-  transform-origin: left center;
-}
-
-/* --------------------------------------------------
-   CENTER KNOT
--------------------------------------------------- */
-
-.ribbon-bow__knot {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: 38px;
-  height: 54px;
-
-  transform: translate(-50%, -50%);
-
-  border-radius: 8px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #cf2056 0%,
-      #f04d7d 32%,
-      #e52f68 58%,
-      #c91d50 100%
-    );
-
-  box-shadow:
-    inset 1px 0 0 rgba(255, 255, 255, 0.3),
-    inset -2px 0 5px rgba(106, 0, 36, 0.2),
-    0 8px 18px rgba(174, 36, 87, 0.18);
-
-  z-index: 5;
-}
-
-/* --------------------------------------------------
-   BOW TAILS
--------------------------------------------------- */
-
-.ribbon-bow__tail {
-  position: absolute;
-
-  top: 66px;
-
-  width: 52px;
-  height: 72px;
-
-  background: #d9275e;
-
-  box-shadow:
-    inset 0 -5px 8px rgba(104, 0, 37, 0.12);
-}
-
-.ribbon-bow__tail--left {
-  left: 42px;
-
-  transform:
-    rotate(17deg)
-    skewY(-8deg);
-
-  clip-path:
-    polygon(
-      0 0,
-      100% 0,
-      82% 100%,
-      50% 82%,
-      15% 100%
-    );
-}
-
-.ribbon-bow__tail--right {
-  right: 42px;
-
-  transform:
-    rotate(-17deg)
-    skewY(8deg);
-
-  clip-path:
-    polygon(
-      0 0,
-      100% 0,
-      85% 100%,
-      50% 82%,
-      18% 100%
-    );
-}
-
-/* ==================================================
-   RIBBON OPENING
-================================================== */
-
-.ribbon--opening .ribbon__left {
-  transform:
-    translateX(-125%)
-    rotate(-4deg);
-}
-
-.ribbon--opening .ribbon__right {
-  transform:
-    translateX(125%)
-    rotate(4deg);
-}
-
-/*
- * The bow remains visible for a short moment,
- * then travels away with the ribbon.
- */
-
-.ribbon--opening .ribbon-bow {
-  transform:
-    translate(-50%, -50%)
-    scale(0.85);
-
-  opacity: 0;
-}
-
-.ribbon--opening .ribbon-bow__loop--left {
-  transform:
-    translate(-35px, -50%)
-    rotate(-25deg);
-}
-
-.ribbon--opening .ribbon-bow__loop--right {
-  transform:
-    translate(35px, -50%)
-    rotate(25deg);
-}
-
-/* ==================================================
-   RIBBON OPENING
-================================================== */
-
-.ribbon--opening .ribbon__left {
-  transform:
-    translateX(-115%)
-    rotate(-3deg);
-}
-
-.ribbon--opening .ribbon__right {
-  transform:
-    translateX(115%)
-    rotate(3deg);
-}
-
-.ribbon--opening .ribbon__center {
-  transform:
-    translate(-50%, -50%)
-    scaleY(1);
-
-  opacity: 1;
-}
-
-/* ==================================================
    COUNTDOWN
 ================================================== */
 
@@ -858,4 +543,434 @@
       rotate(calc(var(--rotation) + 780deg))
       scale(0.8);
   }
+}
+
+/* =========================================
+   SVASTI LOGO
+========================================= */
+
+.opening-logo {
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  z-index: 100;
+
+  width: min(300px, 38vw);
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+}
+
+.opening-logo img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 8px 18px rgba(45, 4, 15, 0.18));
+}
+
+@media (max-width: 700px) {
+  .opening-logo {
+    top: 6%;
+    width: min(240px, 58vw);
+  }
+}
+
+/* =========================================
+   SVASTI PEACH PANEL
+========================================= */
+
+.opening-panel {
+  position: absolute;
+
+  top: 5.5%;
+  left: 50%;
+
+  z-index: 80;
+
+  width: min(560px, 80vw);
+
+  padding: 20px 32px 22px;
+
+  transform: translateX(-50%);
+
+  border-radius: 30px;
+
+  overflow: hidden;
+
+  background:
+    /* soft center glow */
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255, 255, 255, 0.65),
+      transparent 42%
+    ),
+
+    /* subtle peach base */
+    linear-gradient(
+      145deg,
+      #ffede5 0%,
+      #fbded4 48%,
+      #f5cbc5 100%
+    );
+
+  box-shadow:
+    0 25px 60px rgba(55, 3, 14, 0.28),
+    0 8px 22px rgba(92, 26, 38, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   FLORAL EDGE PATTERN
+========================================= */
+
+.opening-panel::before {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+
+    /* small floral dots */
+    radial-gradient(
+      circle at 12px 12px,
+      rgba(139, 67, 62, 0.16) 0 2px,
+      transparent 2.5px
+    ),
+
+    radial-gradient(
+      circle at 24px 24px,
+      rgba(139, 67, 62, 0.12) 0 2px,
+      transparent 2.5px
+    ),
+
+    /* diagonal fine pattern */
+    repeating-linear-gradient(
+      45deg,
+      rgba(139, 67, 62, 0.025) 0,
+      rgba(139, 67, 62, 0.025) 1px,
+      transparent 1px,
+      transparent 14px
+    );
+
+  background-size:
+    36px 36px,
+    36px 36px,
+    auto;
+
+  opacity: 0.55;
+
+  pointer-events: none;
+}
+
+.opening-panel__inner::before {
+  content: '';
+
+  position: absolute;
+
+  inset: -16px;
+
+  border:
+    1px solid
+    rgba(154, 74, 68, 0.13);
+
+  border-radius: 25px;
+
+  box-shadow:
+    inset 0 0 0 5px
+      rgba(255, 255, 255, 0.08);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   DECORATIVE INNER BORDER
+========================================= */
+
+.opening-panel::after {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  border: 1px solid
+    rgba(145, 70, 64, 0.24);
+
+  border-radius: 30px;
+
+  box-shadow:
+    inset 0 0 18px
+      rgba(255, 255, 255, 0.18);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   PANEL CONTENT
+========================================= */
+
+.opening-panel__inner {
+  position: relative;
+
+  z-index: 3;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.opening-panel .opening-logo {
+  position: relative;
+
+  top: auto;
+  left: auto;
+
+  z-index: 4;
+
+  width: min(270px, 50vw);
+
+  margin: -4px auto 2px;
+
+  transform: none;
+
+  pointer-events: none;
+}
+
+.opening-panel .opening-logo img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 7px 12px
+      rgba(55, 12, 20, 0.15)
+    );
+}
+
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+.opening-panel__countdown {
+  position: relative;
+
+  z-index: 4;
+
+  display: flex;
+
+  justify-content: center;
+
+  width: 100%;
+}
+
+.opening-panel .countdown {
+  position: relative;
+
+  top: auto;
+  left: auto;
+
+  width: 100%;
+
+  margin: 0;
+
+  transform: none;
+}
+
+
+/* =========================================
+   PANEL CUTTING
+========================================= */
+
+.opening-panel--cutting {
+  transform:
+    translateX(-50%)
+    scale(1.012);
+
+  transition:
+    transform 0.7s
+    cubic-bezier(
+      0.22,
+      0.72,
+      0.18,
+      1
+    );
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+  .opening-panel {
+    top: 5%;
+
+    width: min(92vw, 520px);
+
+    padding: 22px 16px 26px;
+
+    border-radius: 23px;
+  }
+
+  .opening-panel::after {
+    inset: 7px;
+
+    border-radius: 16px;
+  }
+
+  .opening-panel .opening-logo {
+    width: min(245px, 64vw);
+
+    margin-bottom: 9px;
+  }
+}
+
+.opening-panel__label {
+  margin: 0 0 14px;
+
+  font-size: 15px;
+  letter-spacing: 0.025em;
+}
+
+.svasti-ribbon {
+  position: absolute;
+
+  top: clamp(350px, 42vh, 490px);
+  left: 0;
+
+  width: 100vw;
+  height: 560px;
+
+  z-index: 75;
+  pointer-events: none;
+  overflow: visible;
+
+  display: block;
+
+  will-change: transform, opacity, filter;
+}
+
+.svasti-ribbon__image {
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 100vw;
+  height: auto;
+
+  max-width: none;
+
+  object-fit: contain;
+  object-position: center;
+
+  transform: translateX(-50%);
+
+  display: block;
+
+  user-select: none;
+  -webkit-user-drag: none;
+
+  opacity: 1;
+
+  will-change: opacity, transform, filter;
+}
+
+@media (max-width: 700px) {
+  .countdown {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+  }
+
+  .countdown__group {
+    display: flex;
+    align-items: center;
+
+    flex: 1 1 0;
+    min-width: 0;
+
+    gap: 3px;
+  }
+
+  .countdown__unit {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+  }
+
+  .countdown__value {
+    font-size: clamp(20px, 6vw, 25px);
+    line-height: 1;
+  }
+
+  .countdown__separator {
+    flex: 0 0 auto;
+
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
+/* =========================================
+   GRAND REVEAL MESSAGE
+========================================= */
+
+.opening-panel__label {
+  margin: 0 0 12px;
+
+  text-align: center;
+
+  font-family:
+    Georgia,
+    'Times New Roman',
+    serif;
+
+  font-size: clamp(15px, 2vw, 19px);
+  font-weight: 400;
+  font-style: italic;
+
+  letter-spacing: 0.045em;
+
+  color: #8d5a72;
+
+  line-height: 1.4;
 }

@@ -1,0 +1,499 @@
+/* =========================================
+   SVASTI VELVET CURTAINS
+========================================= */
+
+.curtains {
+  position: absolute;
+  inset: 0;
+
+  z-index: 60;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   CURTAIN PANEL
+========================================= */
+
+.curtain {
+  position: absolute;
+
+  top: -4vh;
+
+  width: 53vw;
+  height: 112vh;
+
+  overflow: hidden;
+
+  will-change: transform;
+
+  background:
+    /* soft velvet sheen */
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 118, 145, 0.10) 9%,
+      transparent 19%,
+      rgba(255, 100, 130, 0.13) 32%,
+      transparent 42%,
+      rgba(255, 125, 150, 0.09) 55%,
+      transparent 66%,
+      rgba(255, 105, 135, 0.12) 80%,
+      transparent 91%
+    ),
+
+    /* large vertical folds */
+    repeating-linear-gradient(
+      91deg,
+      #26030b 0px,
+      #3c0510 22px,
+      #65091b 43px,
+      #490611 62px,
+      #790b23 82px,
+      #400510 103px,
+      #68091b 124px,
+      #2c030c 146px
+    );
+
+  box-shadow:
+    inset 0 0 45px rgba(10, 0, 4, 0.58),
+    inset 18px 0 32px rgba(255, 100, 130, 0.06),
+    inset -18px 0 32px rgba(10, 0, 4, 0.30),
+    0 15px 40px rgba(30, 0, 8, 0.30);
+}
+
+
+/* =========================================
+   LEFT PANEL
+========================================= */
+
+.curtain--left {
+  left: -3vw;
+
+  transform-origin: left center;
+
+  /*
+   * Slight overlap at center.
+   * This is what keeps the curtain completely closed.
+   */
+  transform:
+    translateX(0)
+    skewX(-1.5deg);
+}
+
+
+/* =========================================
+   RIGHT PANEL
+========================================= */
+
+.curtain--right {
+  right: -3vw;
+
+  transform-origin: right center;
+
+  transform:
+    translateX(0)
+    skewX(1.5deg);
+}
+
+
+/* =========================================
+   DEEP FABRIC FOLDS
+========================================= */
+
+.curtain__folds {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+
+      rgba(12, 0, 4, 0.52) 0%,
+      rgba(255, 105, 130, 0.13) 4%,
+      rgba(20, 0, 6, 0.58) 9%,
+
+      rgba(255, 115, 140, 0.12) 14%,
+      rgba(20, 0, 6, 0.56) 19%,
+
+      rgba(255, 125, 145, 0.16) 25%,
+      rgba(18, 0, 5, 0.60) 31%,
+
+      rgba(255, 110, 135, 0.11) 37%,
+      rgba(17, 0, 5, 0.60) 43%,
+
+      rgba(255, 130, 150, 0.17) 49%,
+      rgba(14, 0, 4, 0.63) 56%,
+
+      rgba(255, 110, 135, 0.12) 62%,
+      rgba(18, 0, 5, 0.58) 69%,
+
+      rgba(255, 125, 145, 0.15) 75%,
+      rgba(15, 0, 4, 0.63) 82%,
+
+      rgba(255, 110, 135, 0.10) 89%,
+      rgba(10, 0, 3, 0.68) 100%
+    );
+
+  opacity: 0.9;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   SOFT VELVET LIGHT
+========================================= */
+
+.curtain::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      ellipse at 35% 25%,
+      rgba(255, 175, 190, 0.13),
+      transparent 28%
+    ),
+
+    linear-gradient(
+      103deg,
+      transparent 12%,
+      rgba(255, 145, 165, 0.10) 21%,
+      transparent 31%,
+      rgba(255, 135, 160, 0.08) 47%,
+      transparent 57%,
+      rgba(255, 145, 165, 0.10) 72%,
+      transparent 84%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   LOWER VELVET DEPTH
+========================================= */
+
+.curtain::after {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 32%;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(25, 0, 7, 0.08) 35%,
+      rgba(12, 0, 4, 0.30) 100%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   CENTER SEAM
+========================================= */
+
+.curtain--left::after {
+  box-shadow:
+    inset -18px 0 25px rgba(8, 0, 3, 0.30);
+}
+
+.curtain--right::after {
+  box-shadow:
+    inset 18px 0 25px rgba(8, 0, 3, 0.30);
+}
+
+
+/* =========================================
+   INNER EDGE
+========================================= */
+
+.curtain__edge {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 55px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 0, 3, 0.48),
+      rgba(70, 4, 17, 0.22) 48%,
+      transparent
+    );
+
+  filter: blur(1px);
+}
+
+
+/* Left inner edge */
+
+.curtain--left .curtain__edge {
+  right: -1px;
+}
+
+
+/* Right inner edge */
+
+.curtain--right .curtain__edge {
+  left: -1px;
+
+  transform: scaleX(-1);
+}
+
+
+/* =========================================
+   GOLD TIEBACK
+========================================= */
+
+.curtain__tie {
+  position: absolute;
+
+  top: 49%;
+
+  width: 96px;
+  height: 17px;
+
+  border-radius: 999px;
+
+  background:
+    repeating-linear-gradient(
+      115deg,
+      #79501a 0 4px,
+      #bd9144 4px 7px,
+      #efd17d 7px 10px,
+      #9a6925 10px 14px
+    );
+
+  box-shadow:
+    0 5px 12px rgba(30, 5, 0, 0.35),
+    inset 0 1px 2px rgba(255, 240, 180, 0.8);
+
+  z-index: 8;
+}
+
+
+/* Left tieback */
+
+.curtain--left .curtain__tie {
+  right: -22px;
+
+  transform: rotate(8deg);
+}
+
+
+/* Right tieback */
+
+.curtain--right .curtain__tie {
+  left: -22px;
+
+  transform: rotate(-8deg);
+}
+
+
+/* =========================================
+   SMOOTH CURTAIN OPENING
+========================================= */
+
+.curtain--left,
+.curtain--right {
+  transition:
+    transform 2.7s
+    cubic-bezier(
+      0.18,
+      0.78,
+      0.16,
+      1
+    );
+}
+
+
+/*
+ * Move each panel far enough outside
+ * the viewport to completely reveal
+ * the stage.
+ */
+
+.curtains--opening .curtain--left {
+  transform:
+    translateX(-54vw)
+    skewX(-1.5deg);
+}
+
+.curtains--opening .curtain--right {
+  transform:
+    translateX(54vw)
+    skewX(1.5deg);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+  .curtain {
+    width: 56vw;
+  }
+
+  .curtain--left {
+    left: -4vw;
+  }
+
+  .curtain--right {
+    right: -4vw;
+  }
+
+  .curtains--opening .curtain--left {
+    transform:
+      translateX(-62vw)
+      skewX(-1.5deg);
+  }
+
+  .curtains--opening .curtain--right {
+    transform:
+      translateX(62vw)
+      skewX(1.5deg);
+  }
+
+  .curtain__tie {
+    width: 76px;
+  }
+}
+
+/* =========================================
+   NATURAL VELVET AIR MOVEMENT
+========================================= */
+
+.curtain {
+  overflow: hidden;
+
+  background-size:
+    180px 100%,
+    100% 100%;
+
+  animation:
+    curtain-air 7s ease-in-out infinite;
+}
+
+/*
+ * Slow movement of the velvet folds.
+ * This creates the feeling of fabric
+ * gently breathing and moving in air.
+ */
+@keyframes curtain-air {
+  0% {
+    background-position:
+      0 0,
+      0 0;
+  }
+
+  25% {
+    background-position:
+      14px 0,
+      0 0;
+  }
+
+  50% {
+    background-position:
+      -10px 0,
+      0 0;
+  }
+
+  75% {
+    background-position:
+      12px 0,
+      0 0;
+  }
+
+  100% {
+    background-position:
+      0 0,
+      0 0;
+  }
+}
+
+.curtain::after {
+  content: '';
+
+  position: absolute;
+  inset: -5% -8%;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 120, 145, 0.04) 22%,
+      rgba(255, 180, 190, 0.10) 35%,
+      transparent 48%,
+      rgba(255, 100, 130, 0.05) 65%,
+      transparent 80%
+    );
+
+  transform:
+    translateX(-8%)
+    skewX(-1deg);
+
+  opacity: 0.8;
+
+  animation:
+    curtain-sheen 9s ease-in-out infinite;
+
+  will-change: transform;
+}
+
+@keyframes curtain-sheen {
+  0% {
+    transform:
+      translateX(-8%)
+      skewX(-1deg);
+  }
+
+  50% {
+    transform:
+      translateX(8%)
+      skewX(1deg);
+  }
+
+  100% {
+    transform:
+      translateX(-8%)
+      skewX(-1deg);
+  }
+}
+
+.curtain--left {
+  animation-delay: -1.8s;
+}
+
+.curtain--right {
+  animation-delay: -4.2s;
+}
+
+.curtain--left::after {
+  animation-delay: -2.5s;
+}
+
+.curtain--right::after {
+  animation-delay: -5s;
+}
