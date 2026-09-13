@@ -1,0 +1,222 @@
+/* =========================================
+   SILK REVEAL
+========================================= */
+
+.silk-reveal {
+  position: fixed;
+  inset: 0;
+
+  z-index: 10;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  background: #f9dce7;
+
+  perspective: 1600px;
+
+  /*
+    Hidden during the entire welcome
+    animation.
+  */
+
+  opacity: 0;
+
+  visibility: hidden;
+}
+
+
+/* =========================================
+   SILK VISIBLE — CLOSED
+========================================= */
+
+.silk-reveal--visible {
+  opacity: 1;
+
+  visibility: visible;
+}
+
+
+/* =========================================
+   SILK PANELS
+========================================= */
+
+.silk-reveal__panel {
+  position: absolute;
+
+  top: 0;
+
+  width: 50%;
+  height: 100%;
+
+  overflow: hidden;
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+
+  /*
+    Slightly slower than before.
+
+    Previous:
+    1 second
+
+    New:
+    1.25 seconds
+  */
+
+  transition:
+    transform 1.25s
+      cubic-bezier(0.18, 0.82, 0.22, 1),
+    opacity 1s ease,
+    filter 1.25s ease;
+}
+
+
+/* =========================================
+   CLOSED STATE — LEFT
+========================================= */
+
+.silk-reveal__panel--left {
+  left: 0;
+
+  transform:
+    translateX(0)
+    rotateY(0)
+    scale(1);
+
+  transform-origin: left center;
+}
+
+
+/* =========================================
+   CLOSED STATE — RIGHT
+========================================= */
+
+.silk-reveal__panel--right {
+  right: 0;
+
+  transform:
+    translateX(0)
+    rotateY(0)
+    scale(1);
+
+  transform-origin: right center;
+}
+
+
+/* =========================================
+   SILK IMAGE
+========================================= */
+
+.silk-reveal__panel img {
+  position: absolute;
+
+  top: 0;
+
+  width: 200%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: cover;
+
+  display: block;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   LEFT IMAGE
+========================================= */
+
+.silk-reveal__panel--left img {
+  left: 0;
+}
+
+
+/* =========================================
+   RIGHT IMAGE
+========================================= */
+
+.silk-reveal__panel--right img {
+  right: 0;
+}
+
+
+/* =========================================
+   OPEN — LEFT
+========================================= */
+
+.silk-reveal--opening
+.silk-reveal__panel--left {
+  transform:
+    translateX(-108%)
+    rotateY(5deg)
+    scale(1.015);
+
+  opacity: 0;
+
+  filter: blur(1.5px);
+}
+
+
+/* =========================================
+   OPEN — RIGHT
+========================================= */
+
+.silk-reveal--opening
+.silk-reveal__panel--right {
+  transform:
+    translateX(108%)
+    rotateY(-5deg)
+    scale(1.015);
+
+  opacity: 0;
+
+  filter: blur(1.5px);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .silk-reveal__panel {
+    transition:
+      transform 1.15s
+        cubic-bezier(0.18, 0.82, 0.22, 1),
+      opacity 0.9s ease,
+      filter 1.15s ease;
+  }
+
+
+  .silk-reveal--opening
+  .silk-reveal__panel--left {
+    transform:
+      translateX(-110%)
+      rotateY(3deg)
+      scale(1.015);
+  }
+
+
+  .silk-reveal--opening
+  .silk-reveal__panel--right {
+    transform:
+      translateX(110%)
+      rotateY(-3deg)
+      scale(1.015);
+  }
+}

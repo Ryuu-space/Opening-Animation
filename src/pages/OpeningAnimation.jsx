@@ -6,6 +6,7 @@ import useOpeningSequence from '../hooks/useOpeningSequence';
 import Curtains from '../components/Curtains/Curtains';
 import Ribbon from '../components/Ribbon/Ribbon';
 import WelcomeReveal from '../components/WelcomeReveal/WelcomeReveal';
+import SilkReveal from '../components/SilkReveal/SilkReveal';
 
 import logo from '../assets/logo-DGTPLIE_.webp';
 
@@ -19,12 +20,14 @@ import '../styles/curtains.css';
 import '../styles/welcome-reveal.css';
 
 
+
 /* =========================================
    COUNTDOWN
 ========================================= */
 
 const formatNumber = (value) =>
   String(value).padStart(2, '0');
+
 
 const Countdown = ({ time }) => {
   const units = [
@@ -100,15 +103,12 @@ const OpeningPanel = ({
     >
       <div className="opening-panel__inner">
 
-        {/* Logo */}
         <OpeningLogo />
 
-        {/* Elegant opening message */}
         <p className="opening-panel__label">
           The Grand Reveal Begins In
         </p>
 
-        {/* Countdown */}
         <div className="opening-panel__countdown">
           <Countdown
             time={countdown}
@@ -160,6 +160,7 @@ const Balloons = ({ isVisible }) => {
 ========================================= */
 
 const CONFETTI_COUNT = 100;
+
 
 const Confetti = ({ isVisible }) => {
   const pieces = Array.from(
@@ -262,20 +263,31 @@ const Confetti = ({ isVisible }) => {
 
 const OpeningAnimation = () => {
 
-  /*
-   * Read saved configuration once
-   * when the animation page loads.
-   */
+  /* =======================================
+     SETTINGS
+  ======================================= */
 
   const [settings] = useState(() =>
     getSettings(),
   );
 
 
-  /*
-   * Convert the configured 12-hour
-   * opening time into a timestamp.
-   */
+  /* =======================================
+     WEBSITE REVEAL STATE
+
+     false → silk curtain is closed
+     true  → silk curtain splits open
+  ======================================= */
+
+  const [
+  isSilkRevealing,
+  setIsSilkRevealing,
+  ] = useState(false);
+
+
+  /* =======================================
+     OPENING TIME
+  ======================================= */
 
   const openingTime = useMemo(
     () =>
@@ -284,28 +296,18 @@ const OpeningAnimation = () => {
   );
 
 
-  /*
-   * Countdown toward the opening time.
-   */
+  /* =======================================
+     COUNTDOWN
+  ======================================= */
 
   const countdown = useCountdown(
     openingTime,
   );
 
 
-  /*
-   * Animation sequence:
-   *
-   * countdown
-   *     ↓
-   * ribbon cutting
-   *     ↓
-   * curtain reveal
-   *     ↓
-   * celebration
-   *     ↓
-   * complete
-   */
+  /* =======================================
+     ANIMATION SEQUENCE
+  ======================================= */
 
   const {
     isCutting,
@@ -324,7 +326,9 @@ const OpeningAnimation = () => {
   if (!settings.enabled) {
     return (
       <main className="opening-page">
+
         <div className="opening-background" />
+
       </main>
     );
   }
@@ -343,14 +347,10 @@ const OpeningAnimation = () => {
 
       <div className="opening-background" />
 
-
       {/* =====================================
-          CURTAIN
+          VELVET CURTAINS
 
-          Curtain remains closed while
-          ribbon is being cut.
-
-          It opens during celebration.
+          Opens during celebration.
       ===================================== */}
 
       <Curtains
@@ -379,7 +379,7 @@ const OpeningAnimation = () => {
       {/* =====================================
           RIBBON
 
-          Above curtain + panel.
+          Disappears during cutting.
       ===================================== */}
 
       <Ribbon
@@ -393,8 +393,6 @@ const OpeningAnimation = () => {
 
       {/* =====================================
           CONFETTI
-
-          Starts together with celebration.
       ===================================== */}
 
       <Confetti
@@ -407,8 +405,6 @@ const OpeningAnimation = () => {
 
       {/* =====================================
           BALLOONS
-
-          Starts together with celebration.
       ===================================== */}
 
       <Balloons
@@ -422,21 +418,35 @@ const OpeningAnimation = () => {
       {/* =====================================
           WELCOME REVEAL
 
-          No card.
-          Same logo.
-          Typewriter text.
-          Loading bar.
+          Typewriter + loader.
 
-          Runs alongside balloons + confetti.
+          When typing reaches 100%,
+          the silk curtain begins opening.
       ===================================== */}
+<WelcomeReveal
+  isVisible={
+    isCelebrating ||
+    isComplete
+  }
 
-      <WelcomeReveal
-        isVisible={
-          isCelebrating ||
-          isComplete
-        }
-      />
+  isFinished={
+    isSilkRevealing
+  }
 
+  onComplete={() => {
+    window.setTimeout(() => {
+      setIsSilkRevealing(true);
+    }, 250);
+  }}
+/>
+
+
+
+<SilkReveal
+  isOpening={
+    isSilkRevealing
+  }
+/>
     </main>
   );
 };

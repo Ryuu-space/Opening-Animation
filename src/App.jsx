@@ -8,7 +8,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<OpeningAnimation />} />
-        <Route path="/controls" element={<AnimationControls />} />
+        <Route
+          path="/controls"
+          element={<AnimationControls />}
+        />
       </Routes>
     </BrowserRouter>
   );

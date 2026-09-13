@@ -7,6 +7,7 @@ import './styles/global.css';
 import './styles/opening-animation.css';
 import './styles/controls.css';
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
