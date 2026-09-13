@@ -5,6 +5,7 @@ import useOpeningSequence from '../hooks/useOpeningSequence';
 
 import Curtains from '../components/Curtains/Curtains';
 import Ribbon from '../components/Ribbon/Ribbon';
+import WelcomeReveal from '../components/WelcomeReveal/WelcomeReveal';
 
 import logo from '../assets/logo-DGTPLIE_.webp';
 
@@ -15,6 +16,7 @@ import {
 
 import '../styles/opening-animation.css';
 import '../styles/curtains.css';
+import '../styles/welcome-reveal.css';
 
 
 /* =========================================
@@ -79,7 +81,6 @@ const OpeningLogo = () => {
 };
 
 
-
 /* =========================================
    PEACH COUNTDOWN PANEL
 ========================================= */
@@ -98,6 +99,7 @@ const OpeningPanel = ({
       aria-label="Svasti Styles opening countdown"
     >
       <div className="opening-panel__inner">
+
         {/* Logo */}
         <OpeningLogo />
 
@@ -112,12 +114,11 @@ const OpeningPanel = ({
             time={countdown}
           />
         </div>
+
       </div>
     </section>
   );
 };
-
-
 
 
 /* =========================================
@@ -260,10 +261,12 @@ const Confetti = ({ isVisible }) => {
 ========================================= */
 
 const OpeningAnimation = () => {
+
   /*
    * Read saved configuration once
    * when the animation page loads.
    */
+
   const [settings] = useState(() =>
     getSettings(),
   );
@@ -273,6 +276,7 @@ const OpeningAnimation = () => {
    * Convert the configured 12-hour
    * opening time into a timestamp.
    */
+
   const openingTime = useMemo(
     () =>
       getOpeningTimestamp(settings),
@@ -283,6 +287,7 @@ const OpeningAnimation = () => {
   /*
    * Countdown toward the opening time.
    */
+
   const countdown = useCountdown(
     openingTime,
   );
@@ -295,10 +300,13 @@ const OpeningAnimation = () => {
    *     ↓
    * ribbon cutting
    *     ↓
+   * curtain reveal
+   *     ↓
    * celebration
    *     ↓
    * complete
    */
+
   const {
     isCutting,
     isCelebrating,
@@ -338,12 +346,15 @@ const OpeningAnimation = () => {
 
       {/* =====================================
           CURTAIN
-          Behind the panel and ribbon
+
+          Curtain remains closed while
+          ribbon is being cut.
+
+          It opens during celebration.
       ===================================== */}
 
       <Curtains
         isOpening={
-          isCutting ||
           isCelebrating ||
           isComplete
         }
@@ -351,8 +362,9 @@ const OpeningAnimation = () => {
 
 
       {/* =====================================
-          PEACH PANEL
-          Contains logo + countdown
+          PEACH COUNTDOWN PANEL
+
+          Disappears when celebration starts.
       ===================================== */}
 
       {!isCelebrating &&
@@ -366,7 +378,8 @@ const OpeningAnimation = () => {
 
       {/* =====================================
           RIBBON
-          MUST BE ABOVE CURTAIN + PANEL
+
+          Above curtain + panel.
       ===================================== */}
 
       <Ribbon
@@ -380,6 +393,8 @@ const OpeningAnimation = () => {
 
       {/* =====================================
           CONFETTI
+
+          Starts together with celebration.
       ===================================== */}
 
       <Confetti
@@ -392,9 +407,30 @@ const OpeningAnimation = () => {
 
       {/* =====================================
           BALLOONS
+
+          Starts together with celebration.
       ===================================== */}
 
       <Balloons
+        isVisible={
+          isCelebrating ||
+          isComplete
+        }
+      />
+
+
+      {/* =====================================
+          WELCOME REVEAL
+
+          No card.
+          Same logo.
+          Typewriter text.
+          Loading bar.
+
+          Runs alongside balloons + confetti.
+      ===================================== */}
+
+      <WelcomeReveal
         isVisible={
           isCelebrating ||
           isComplete

@@ -434,28 +434,17 @@
 
 /* Colors */
 
-.confetti__piece:nth-child(6n) {
-  background: #f43f72;
+/* =========================================
+   SVASTI CONFETTI COLORS
+   Pink + Champagne Gold
+========================================= */
+
+.confetti__piece:nth-child(2n) {
+  background: #e95a86;
 }
 
-.confetti__piece:nth-child(6n + 1) {
-  background: #ffcf5c;
-}
-
-.confetti__piece:nth-child(6n + 2) {
-  background: #58c7d9;
-}
-
-.confetti__piece:nth-child(6n + 3) {
-  background: #9b7ade;
-}
-
-.confetti__piece:nth-child(6n + 4) {
-  background: #6dcc91;
-}
-
-.confetti__piece:nth-child(6n + 5) {
-  background: #ff8b61;
+.confetti__piece:nth-child(2n + 1) {
+  background: #d9a441;
 }
 
 
@@ -901,6 +890,50 @@
   opacity: 1;
 
   will-change: opacity, transform, filter;
+}
+
+/* =========================================
+   RIBBON DISAPPEAR / CUT
+========================================= */
+
+.svasti-ribbon--opening {
+  animation:
+    ribbon-disappear
+    1.1s
+    cubic-bezier(0.22, 0.61, 0.36, 1)
+    forwards;
+}
+
+@keyframes ribbon-disappear {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  30% {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    filter: blur(0);
+  }
+
+  60% {
+    opacity: 0.65;
+    transform: translateY(-3px);
+    filter: blur(0.5px);
+  }
+
+  80% {
+    opacity: 0.3;
+    transform: translateY(-5px);
+    filter: blur(1.5px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: blur(3px);
+  }
 }
 
 @media (max-width: 700px) {

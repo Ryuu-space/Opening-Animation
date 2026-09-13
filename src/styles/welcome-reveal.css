@@ -1,0 +1,295 @@
+/* =========================================
+   WELCOME REVEAL
+========================================= */
+
+.welcome-reveal {
+  position: absolute;
+  inset: 0;
+
+  z-index: 40;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 24px 90px;
+
+  pointer-events: none;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
+
+.welcome-reveal--visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.welcome-reveal__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: min(700px, 90vw);
+
+  text-align: center;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.welcome-reveal__logo {
+  width: min(280px, 52vw);
+
+  margin-bottom: 22px;
+
+  opacity: 0;
+  transform: translateY(18px) scale(0.96);
+
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s
+      cubic-bezier(0.22, 0.72, 0.18, 1);
+}
+
+.welcome-reveal--started
+  .welcome-reveal__logo {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.welcome-reveal__logo img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  filter:
+    drop-shadow(
+      0 10px 22px
+      rgba(55, 12, 20, 0.18)
+    );
+}
+
+
+/* =========================================
+   TYPEWRITER TEXT
+========================================= */
+
+.welcome-reveal__text {
+  min-height: 145px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome-reveal__text h1 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    'Times New Roman',
+    serif;
+
+  font-size:
+    clamp(28px, 4vw, 46px);
+
+  font-weight: 400;
+  font-style: italic;
+
+  letter-spacing: 0.025em;
+
+  color: #8d3157;
+
+  line-height: 1.2;
+}
+
+.welcome-reveal__text p {
+  max-width: 600px;
+
+  margin: 18px 0 0;
+
+  font-family:
+    Georgia,
+    'Times New Roman',
+    serif;
+
+  font-size:
+    clamp(15px, 2vw, 19px);
+
+  font-weight: 400;
+
+  letter-spacing: 0.035em;
+
+  line-height: 1.7;
+
+  color: #8d5a72;
+}
+
+
+/* =========================================
+   TYPEWRITER CARET
+========================================= */
+
+.typewriter-caret {
+  display: inline-block;
+
+  margin-left: 3px;
+
+  font-style: normal;
+
+  animation:
+    typewriter-blink
+    0.8s
+    steps(1)
+    infinite;
+}
+
+@keyframes typewriter-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* =========================================
+   LOADING BAR
+========================================= */
+
+.welcome-reveal__loader {
+  position: absolute;
+
+  left: 50%;
+  bottom: 42px;
+
+  width: min(520px, 72vw);
+
+  transform: translateX(-50%);
+
+  text-align: center;
+}
+
+.welcome-reveal__loader-track {
+  width: 100%;
+  height: 8px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    rgba(141, 49, 87, 0.12);
+
+  border:
+    1px solid
+    rgba(141, 49, 87, 0.18);
+
+  box-shadow:
+    inset 0 1px 3px
+    rgba(80, 20, 40, 0.12),
+    0 4px 14px
+    rgba(141, 49, 87, 0.10);
+}
+
+.welcome-reveal__loader-fill {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #e95a86,
+      #d94673
+    );
+
+  box-shadow:
+    0 0 12px
+    rgba(233, 90, 134, 0.38);
+
+  transition:
+    width 45ms linear;
+}
+
+.welcome-reveal__loader-label {
+  display: block;
+
+  margin-top: 12px;
+
+  font-family:
+    Georgia,
+    'Times New Roman',
+    serif;
+
+  font-size: 12px;
+
+  font-style: italic;
+
+  letter-spacing: 0.14em;
+
+  color: #8d5a72;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+  .welcome-reveal {
+    padding:
+      30px
+      18px
+      80px;
+  }
+
+  .welcome-reveal__logo {
+    width: min(220px, 58vw);
+
+    margin-bottom: 16px;
+  }
+
+  .welcome-reveal__text {
+    min-height: 135px;
+  }
+
+  .welcome-reveal__text h1 {
+    font-size: 28px;
+  }
+
+  .welcome-reveal__text p {
+    margin-top: 14px;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+  }
+
+  .welcome-reveal__loader {
+    bottom: 28px;
+
+    width: 82vw;
+  }
+}
